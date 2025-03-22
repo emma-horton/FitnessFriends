@@ -1,0 +1,108 @@
+
+@startuml
+
+entity Users {
+
+* userId (PK, INT)
+
+--
+
+* username (VARCHAR)
+
+* password (VARCHAR)
+
+}
+
+
+
+entity StravaAccounts {
+
+* accountId (PK, INT)
+
+--
+
+* userId (FK, INT)
+
+* stravaUserId (VARCHAR)
+
+* accessToken (TEXT)
+
+* refreshToken (TEXT)
+
+* lastSyncTime (DATETIME)
+
+}
+
+
+
+entity HabitGoals {
+
+* goalId (PK, INT)
+
+--
+
+* userId (FK, INT)
+
+* goalType (VARCHAR)
+
+* sport (VARCHAR)
+
+* targetValue (INT)
+
+
+}
+
+
+
+entity ActivityData {
+
+* dataId (PK, INT)
+
+--
+
+* userId (FK, INT)
+
+* activityDate (DATE)
+
+* activityType (TEXT)
+
+* activityDuration (FLOAT)
+
+* activityDistance (FLOAT)
+
+
+}
+
+
+
+entity VirtualPets {
+
+* petId (PK, INT)
+
+--
+
+* userId (FK, INT)
+
+* petName (VARCHAR)
+
+* petType (VARCHAR)
+
+* healthStatus (VARCHAR)
+
+* lastUpdated (DATETIME)
+
+}
+
+
+
+Users ||--|| StravaAccounts
+
+Users ||--o{ HabitGoals
+
+Users ||--|| ActivityData
+
+Users ||--|| VirtualPets 
+
+
+
+@enduml

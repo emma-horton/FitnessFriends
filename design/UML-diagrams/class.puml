@@ -1,0 +1,110 @@
+@startuml
+interface IActivityDataSource {
+    +retrieveActivityData()
+}
+
+class StravaActivityDataSource implements IActivityDataSource {
+    +retrieveActivityData()
+}
+
+class User {
+    - userId: int/UUID
+    - username: String
+    - profile: UserProfile
+    - connector: IStravaConnector
+    - pet: IPetBehavior
+}
+
+class UserProfile {
+    - password: String
+    - goals: List<IGoal>
+}
+
+interface IStravaConnector {
+    +connect()
+    +disconnect()
+}
+
+class StravaConnector implements IStravaConnector {
+    - accessToken: String
+    +connect()
+    +disconnect()
+}
+
+interface IPetBehavior {
+    +reactToHealthStatus(status: HealthStatus)
+    + eat_food()
+    + play_game()
+}
+
+abstract class Pet implements IPetBehavior {
+    - petId: int/UUID
+    - health: PetHealth
+    + reactToHealthStatus(status: HealthStatus)
+    + eatFood()
+    + playGame()
+}
+
+class Cat extends Pet{
+    - species: String
+    - furColor: String
+    - hairLength: String
+    - eyeColor: String
+    - favourite_food: String
+    - favourite_game: String
+    + claw()
+    + purr()
+    + chase(target: Object)
+    + meow()
+    + eatFood()
+    + playGame()
+}
+
+class Parrot extends Pet {
+    - colour: String
+    - wingSpan: double
+    - favourite_food: String
+    - favourite_game: String
+    + fly()
+    + speak(phrase: String)
+    + mimicSound(sound: Sound)
+    + eatFood()
+    + playGame()
+}
+
+class Tortoise extends Pet {
+    - shellAppearance: String
+    - favourite_food: String
+    - favourite_game: String
+    + hibernate()
+    + retractIntoShell()
+    + crawl()
+    + eatFood()
+    + playGame()
+}
+
+class PetHealth{
+    - status: HealthStatus
+    +updateStatus(status: HealthStatus)
+}
+
+enum HealthStatus {
+    HEALTHY
+    SICK
+    INJURED
+}
+
+class ActivityData {
+    - dataId: int/UUID
+    - dataSource: IActivityDataSource
+}
+
+User o-- UserProfile
+User ..> IStravaConnector
+UserProfile *-- IGoal
+StravaConnector -- ActivityData
+Pet *-- PetHealth
+ActivityData -- IActivityDataSource
+User -- IPetBehavior
+PetHealth -- HealthStatus
+@enduml

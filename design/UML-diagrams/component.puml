@@ -1,0 +1,70 @@
+@startuml
+component "Virtual Pet App" as PetApp {
+    package "Landing Page" as LandingSection {
+        component "Login" as Login
+        component "Register" as Register
+    }
+  package "User Interaction UI " as UI {
+    component "Choose Goals" as SetGoals
+    ' component "Update Profile" as UpdateProfile
+    component "View Virtual Pet" as ViewVirtualPet
+  }
+
+  package "Pet Interaction UI " as PetInteractionUI {
+    ' component "Create New Pet" as ChoosePet
+    component "View Pet Health" as PetHealth
+}
+  package "Data Processing Logic" as DataProcessingLogic {
+    component "Retrieve Activity Data" as RetrieveData
+    component "Calculate User Progress" as CalculateUserProgress
+    component "Update Pet Health" as UpdatePetHealth
+  }
+  package "Authentication Logic" as AuthLogic {
+    component "Authenticate User Login" as AuthenticateUserLogin
+    component "Connect Strava Account" as ConnectStrava
+  }
+  package "User Data Storage" as UserStorage {
+    component "Users" as UsersData
+  }
+  package "Strava Data Storage" as StravaStorage {
+    component "Strava Accounts" as StravaAccounts
+  }
+  package "Goal Data Storage" as GoalStorage {
+    component "Habit Goals" as HabitGoals
+  }
+  package "Activity Data Storage" as ActivityStorage {
+    component "Activity Data" as ActivityData
+  }
+  package "Pet Data Storage" as PetStorage {
+    component "Virtual Pets" as VirtualPets
+  }
+}
+
+component "Strava Connect App" as StravaApp {
+  component "Strava Connect API" as StravaConnectAPI
+  package "Authentication" as AuthSection {
+    component "Authentication Token" as AuthToken
+  }
+}
+Register --> ConnectStrava
+Login --> AuthenticateUserLogin
+AuthenticateUserLogin <--> UsersData : read
+
+AuthenticateUserLogin --> UI
+ConnectStrava --> AuthToken
+AuthToken --> StravaAccounts
+SetGoals --> HabitGoals : write
+RetrieveData --> StravaAccounts
+StravaAccounts --> StravaConnectAPI
+StravaConnectAPI --> ActivityData : write
+
+ActivityData --> CalculateUserProgress : read
+CalculateUserProgress --> UpdatePetHealth
+UpdatePetHealth --> VirtualPets : write
+
+ViewVirtualPet --> PetHealth
+PetInteractionUI --> VirtualPets : read/write
+
+' UpdateProfile --> UsersData : write
+
+@enduml

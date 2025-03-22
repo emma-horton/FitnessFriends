@@ -1,0 +1,61 @@
+@startuml
+package pet {
+    abstract class Pet extends PetBehaviour {
+        - int petId
+        - PetHealth health
+
+        + Pet(int petId, PetHealth health)
+        + int getPetId()
+        + PetHealth getHealth()
+        + abstract void eat()
+        + abstract void play()
+        + abstract void move()
+        + abstract void sleep()
+        + abstract void hibernate()
+    }
+
+    class PetBehaviour {
+        - Pet pet
+
+        + PetBehaviour(Pet pet)
+        + void tryToMove()
+        + void tryToEat()
+        + void tryToPlay()
+    }
+
+    class PetHealth {
+        - PetHealthStatus status
+
+        + PetHealth(PetHealthStatus status)
+        + PetHealthStatus getStatus()
+        + void setStatus(PetHealthStatus status)
+    }
+
+    enum PetHealthStatus {
+        HEALTHY
+        SICK
+        DEAD
+    }
+
+    class Turtle extends Pet {
+        + Turtle(int petId, PetHealth health)
+        + void eat()
+        + void play()
+        + void move()
+        + void sleep()
+        + void hibernate()
+    }
+
+    class Parrot extends Pet {
+        + Parrot(int petId, PetHealth health)
+        + void eat()
+        + void play()
+        + void move()
+        + void sleep()
+        + void hibernate()
+    }
+
+    Pet *-- PetHealth
+    PetHealth --> PetHealthStatus
+}
+@enduml

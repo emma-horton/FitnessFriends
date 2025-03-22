@@ -1,0 +1,58 @@
+@startuml
+package goal {
+    abstract class FitnessGoal {
+        - GoalType goalType
+        - int targetValue
+        - String sport
+
+        + FitnessGoal(GoalType goalType, int targetValue, String sport)
+        + GoalType getGoalType()
+        + int getTargetValue()
+        + String getSport()
+        + abstract boolean isThisWeeksGoalAchieved()
+        + abstract boolean wasLastWeeksGoalAchieved()
+    }
+
+    class DistanceGoal extends FitnessGoal {
+        + DistanceGoal(int targetValue, String sport)
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+
+    class DurationGoal extends FitnessGoal {
+        + DurationGoal(int targetValue, String sport)
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+
+    class FrequencyGoal extends FitnessGoal {
+        + FrequencyGoal(int targetValue, String sport)
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+
+    abstract class GoalFactory {
+        + abstract FitnessGoal createGoal(GoalType goalType, int targetValue, String sport)
+    }
+
+    class RunningGoalFactory extends GoalFactory {
+        + FitnessGoal createGoal(GoalType goalType, int targetValue, String sport)
+    }
+
+    class SwimmingGoalFactory extends GoalFactory {
+        + FitnessGoal createGoal(GoalType goalType, int targetValue, String sport)
+    }
+
+    class CyclingGoalFactory extends GoalFactory {
+        + FitnessGoal createGoal(GoalType goalType, int targetValue, String sport)
+    }
+
+    enum GoalType {
+        DISTANCE
+        DURATION
+        FREQUENCY
+    }
+
+    FitnessGoal --> GoalType
+}
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+
+actor User
+
+rectangle "Fitness App" {
+    usecase "Connect Strava Account" as ConnectGarmin
+    usecase "Redirect to Strava Authentication Page" as RedirectGarmin
+    usecase "Receive Access Token" as ReceiveToken
+    usecase "Store Access Token" as StoreToken
+    usecase "Display Connection Confirmation" as ConfirmConnection
+    usecase "Display Account Cannot be Found Message" as AuthFail
+    usecase "Set Weekly Habit Goals" as SetGoals
+    usecase "Select Goal Type" as SelectGoalType
+    usecase "Enter Goal Value" as EnterGoalValue
+    usecase "Save Goal" as SaveGoal
+    usecase "Store Goal in Profile" as StoreGoalProfile
+    usecase "Display Goal Confirmation" as DisplayGoalConfirm
+    usecase "Display Invalid Input Message" as InvalidInput
+    usecase "View Virtual Pet Status" as ViewPetStatus
+    usecase "Display Pet Health Status" as DisplayPetHealth
+    usecase "Display Processing Message" as DisplayProcessing
+    ' usecase "Track Weekly Progress" as TrackProgress
+    ' usecase "Retrieve Activity Data" as RetrieveData
+    ' usecase "Calculate Progress" as CalculateProgress
+    ' usecase "Update Pet Status" as UpdatePet
+   ' usecase "Display Progress Visual" as DisplayProgress
+    ' usecase "Display API Error" as DisplayAPIError
+    usecase "Authenticates Account" as UserAuthenticates
+    usecase "Display Invalid Credentials Message" as InvalidCredentials
+}
+
+User --> ConnectGarmin
+ConnectGarmin <.. RedirectGarmin : <<extend>>
+RedirectGarmin <.. UserAuthenticates : <<include>>
+UserAuthenticates <.. ReceiveToken : <<extend>>
+UserAuthenticates <.. InvalidCredentials : <<extend>>
+ReceiveToken <.. StoreToken : <<include>>
+StoreToken <.. ConfirmConnection : <<include>>
+ConnectGarmin <.. AuthFail : <<extend>>
+
+User --> SetGoals
+SetGoals <.. SelectGoalType : <<include>>
+SelectGoalType <.. EnterGoalValue : <<include>>
+EnterGoalValue <.. SaveGoal : <<extend>>
+SaveGoal <.. StoreGoalProfile : <<include>>
+StoreGoalProfile <.. DisplayGoalConfirm : <<include>>
+EnterGoalValue <.. InvalidInput : <<extend>>
+
+User --> ViewPetStatus
+ViewPetStatus <.. DisplayPetHealth : <<extend>>
+ViewPetStatus <.. DisplayProcessing : <<extend>>
+
+' User --> TrackProgress
+' TrackProgress <.. RetrieveData : <<include>>
+' RetrieveData <.. CalculateProgress : <<extend>>
+' CalculateProgress <.. UpdatePet : <<include>>
+' UpdatePet <.. DisplayProgress : <<include>>
+' RetrieveData <.. DisplayAPIError : <<extend>>
+@enduml

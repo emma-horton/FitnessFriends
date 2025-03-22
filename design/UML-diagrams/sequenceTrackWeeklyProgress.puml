@@ -1,0 +1,22 @@
+@startuml
+actor User
+participant "Fitness App" as App
+participant "GarminConnector" as Garmin
+participant "ActivityData" as Activity
+participant "ProgressCalculator" as Calculator
+participant "VirtualPet" as Pet
+participant "UserInterface" as UI
+
+User -> App: Track Weekly Progress
+App -> Garmin: retrieveActivityData()
+Garmin -> Activity: retrieveData()
+Activity -->> Garmin: activityData
+Garmin -->> App: activityData
+App -> Calculator: calculateProgress(activityData)
+Calculator -->> App: progress
+App -> Pet: updateStatus(progress)
+Pet -->> App: petStatus
+App -> UI: displayProgress(progress, petStatus)
+UI -->> App: displayComplete
+App -->> User: Progress Displayed
+@enduml

@@ -1,0 +1,10 @@
+# Ignore build files
+target/
+*.class
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore IDE-specific files
+.idea/
+*.iml
