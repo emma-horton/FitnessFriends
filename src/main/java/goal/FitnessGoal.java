@@ -1,13 +1,46 @@
 package goal;
 
 public abstract class FitnessGoal implements IGoal {
+    protected int goalId;
+    protected int userId;   
     protected GoalType goalType;
     protected int targetValue;
-    protected String sport;
+    protected SportType sport;
 
-    public FitnessGoal(GoalType goalType, int targetValue, String sport) {
+    public FitnessGoal(int goalId, int userId) {
+        this.goalId = goalId;
+        this.userId = userId;
+    }
+
+    public int getGoalId() {
+        return goalId;
+    }
+
+    public void setGoalId(int goalId) {
+        this.goalId = goalId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public GoalType getGoalType() {
+        return goalType;
+    }
+
+    public void setGoalType(GoalType goalType) {
         this.goalType = goalType;
-        this.targetValue = targetValue;
+    }
+
+    public SportType getSport() {
+        return sport;
+    }
+
+    public void setSport(SportType sport) {
         this.sport = sport;
     }
 
@@ -15,6 +48,22 @@ public abstract class FitnessGoal implements IGoal {
         return targetValue;
     }
 
-    public abstract boolean isThisWeeksGoalAchieved(Goal goal);
-    public abstract boolean wasLastWeeksGoalAchieved(Goal goal);
+    public void setTargetValue(int targetValue) {
+        this.targetValue = targetValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "goalId=" + goalId +
+                ", userId=" + userId +
+                ", goalType='" + goalType + '\'' +
+                ", sport='" + sport + '\'' +
+                ", targetValue=" + targetValue +
+                '}';
+    }
+
+
+    public abstract boolean isThisWeeksGoalAchieved();
+    public abstract boolean wasLastWeeksGoalAchieved();
 }

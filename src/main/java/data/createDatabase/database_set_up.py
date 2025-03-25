@@ -20,7 +20,7 @@ cursor = conn.cursor()
 # Insert a sample record
 cursor.execute("""
 INSERT INTO ActivityData (dataId, userId, activityDate, activityType, activityDuration, activityDistance) VALUES
-(14, 2, '2025-03-24', 'RUNNING', 60.0, 20.0);
+(16, 2, '2025-03-18', 'CYCLING', 60.0, 100.0);
 """)
 
 # Save and close
