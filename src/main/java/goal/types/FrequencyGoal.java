@@ -9,12 +9,12 @@ public class FrequencyGoal extends FitnessGoal {
     }
 
     @Override
-    public boolean isThisWeeksGoalAchieved() {
+    public boolean isThisWeeksGoalAchieved(int userId, String sport) {
         System.out.println("Pulling this weeks " + sport + " frequency data");
         System.out.println("Checking if " + sport + " frequency goal is achieved");
         return true;
     }
-    public boolean wasLastWeeksGoalAchieved() {
+    public boolean wasLastWeeksGoalAchieved(int userId, String sport) {
         System.out.println("Pulling last weeks " + sport + " frequency data");
         System.out.println("Checking if " + sport + " frequency goal was achieved");
         return true;

@@ -21,7 +21,16 @@ public class Activity {
     // Getters and Setters
     public int getDataId() { return dataId; }
     public void setDataId(int dataId) { this.dataId = dataId; }
-    //... other getters and setters
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
+    public String getActivityDate() { return activityDate; }
+    public void setActivityDate(String activityDate) { this.activityDate = activityDate; }
+    public String getActivityType() { return activityType; }
+    public void setActivityType(String activityType) { this.activityType = activityType; }
+    public double getActivityDuration() { return activityDuration; }
+    public void setActivityDuration(double activityDuration) { this.activityDuration = activityDuration; }
+    public double getActivityDistance() { return activityDistance; }
+    public void setActivityDistance(double activityDistance) { this.activityDistance = activityDistance; }
 
     @Override
     public String toString() {

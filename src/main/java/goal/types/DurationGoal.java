@@ -9,12 +9,12 @@ public class DurationGoal extends FitnessGoal {
     }
 
     @Override
-    public boolean isThisWeeksGoalAchieved() {
+    public boolean isThisWeeksGoalAchieved(int userId, String sport) {
         System.out.println("Pulling this weeks " + sport + " duration data");
         System.out.println("Checking if " + sport + " duration goal is achieved");
         return true;
     }
-    public boolean wasLastWeeksGoalAchieved() {
+    public boolean wasLastWeeksGoalAchieved(int userId, String sport) {
         System.out.println("Pulling last weeks " + sport + " duration data");
         System.out.println("Checking if " + sport + " duration goal was achieved");
         return true;

@@ -26,7 +26,7 @@ CREATE TABLE HabitGoals (
 CREATE TABLE ActivityData (
     dataId INT PRIMARY KEY,
     userId INT,
-    activityDate DATE,
+    activityDate VARCHAR(50),
     activityType VARCHAR(50),
     activityDuration FLOAT,
     activityDistance FLOAT,
@@ -65,14 +65,14 @@ INSERT INTO HabitGoals (goalId, userId, goalType, sport, targetValue) VALUES
 (5, 4, 'Duration', 'Cycle', 45);
 
 INSERT INTO ActivityData (dataId, userId, activityDate, activityType, activityDuration, activityDistance) VALUES
-(1, 1, '2023-10-25', 'Run', 30.0, 5.0),
-(2, 2, '2023-10-25', 'Cycle', 60.0, 20.0),
-(3, 3, '2023-10-26', 'Swim', 45.0, 1.5),
-(4, 1, '2023-10-26', 'Run', 40.0, 6.0),
-(5, 4, '2023-10-26', 'Cycle', 70.0, 22.0),
-(6,1, '2023-10-27', 'Run', 50.0, 8.0),
-(7,2, '2023-10-27', 'Cycle', 80.0, 25.0),
-(8,1, '2023-10-28', 'Swim', 30.0, 1.0);
+(1, 1, '2025-03-18', 'Run', 30.0, 5.0),
+(2, 2, '2025-03-19', 'Cycle', 60.0, 20.0),
+(3, 3, '2025-03-20', 'Swim', 45.0, 1.5),
+(4, 1, '2025-03-21', 'Run', 40.0, 6.0),
+(5, 4, '2025-03-22', 'Cycle', 70.0, 22.0),
+(6,1, '2025-03-23', 'Run', 50.0, 8.0),
+(7,2, '2025-03-18', 'Cycle', 80.0, 25.0),
+(8,1, '2025-03-19', 'Swim', 30.0, 1.0);
 
 INSERT INTO VirtualPets (petId, userId, petName, petType, healthStatus, lastUpdated) VALUES
 (1, 1, 'Fluffy', 'Dog', 'Healthy', '2023-10-26 10:30:00'),

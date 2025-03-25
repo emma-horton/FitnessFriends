@@ -15,7 +15,6 @@ public abstract class FitnessGoal implements IGoal {
         return targetValue;
     }
 
-    @Override
-    public abstract boolean isThisWeeksGoalAchieved();
-    public abstract boolean wasLastWeeksGoalAchieved();
+    public abstract boolean isThisWeeksGoalAchieved(int userId, String sport);
+    public abstract boolean wasLastWeeksGoalAchieved(int userId, String sport);
 }
