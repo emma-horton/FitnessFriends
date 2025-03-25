@@ -1,6 +1,7 @@
 package data.dao;
 import data.Activity;
 import data.DatabaseConnection;
+import goal.SportType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,7 +58,7 @@ public class ActivityDAO implements DAO<Activity> {
         return activityList;
     }
 
-    public List<Activity> getThisWeeksDataByUserId(int userId, String sport) throws SQLException {
+    public List<Activity> getThisWeeksDataByUserId(int userId, SportType sport) throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<Activity> activityList = new ArrayList<>();
@@ -66,7 +67,7 @@ public class ActivityDAO implements DAO<Activity> {
             String sql = "SELECT * FROM activitydata WHERE activityDate >= DATE('now', '-7 days') AND userId = ? AND activityType = ?;";
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, userId);
-            pstmt.setString(2, sport);
+            pstmt.setString(2, sport.toString());
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -92,7 +93,7 @@ public class ActivityDAO implements DAO<Activity> {
         return activityList;
     }
 
-    public List<Activity> getLastWeeksDataByUserId(int userId, String sport) throws SQLException {
+    public List<Activity> getLastWeeksDataByUserId(int userId, SportType sport) throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<Activity> activityList = new ArrayList<>();
@@ -101,7 +102,7 @@ public class ActivityDAO implements DAO<Activity> {
             String sql = "SELECT * FROM activitydata WHERE activityDate BETWEEN DATE('now', '-14 days') AND DATE('now', '-7 days') AND userId = ? AND activityType = ?;";
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, userId);
-            pstmt.setString(2, sport);
+            pstmt.setString(2, sport.toString());
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

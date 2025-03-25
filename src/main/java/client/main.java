@@ -9,6 +9,7 @@ import data.DatabaseConnection;
 import data.dao.ActivityDAO;
 import goal.FitnessGoal;
 import goal.GoalType;
+import goal.SportType;
 import goal.factories.GoalFactory;
 import goal.factories.RunningGoalFactory;
 import goal.factories.SwimmingGoalFactory;
@@ -21,6 +22,8 @@ import pet.type.Parrot;
 import pet.type.Turtle;
 import pet.PetBehaviour;
 import pet.PetFactory;
+
+import goal.Goal;
 
 public class main {
     public static void main(String[] args) {
@@ -48,9 +51,11 @@ public class main {
         // GoalFactory cyclingFactory = new CyclingGoalFactory();
         // FitnessGoal cyclingFrequencyGoal = cyclingFactory.createGoal(GoalType.FREQUENCY, 3, "Cycling");
 
+        Goal newYearNewMe = new Goal(1,2, GoalType.DISTANCE, SportType.RUNNING, 10);
+
         // Simulate progress
-        System.out.println("Running Distance Goal Achieved? " + runningDistanceGoal.isThisWeeksGoalAchieved(2, "Running")); 
-        System.out.println("Running Distance Goal Achieved? " + runningDistanceGoal.wasLastWeeksGoalAchieved(2, "Running")); 
+        System.out.println("Running Distance Goal Achieved? " + runningDistanceGoal.isThisWeeksGoalAchieved(newYearNewMe)); 
+        System.out.println("Running Distance Goal Achieved? " + runningDistanceGoal.wasLastWeeksGoalAchieved(newYearNewMe)); 
 
         // System.err.println("----------------------");
 
@@ -61,34 +66,6 @@ public class main {
 
         // System.out.println("Cycling Frequency Goal Achieved? " + cyclingFrequencyGoal.isThisWeeksGoalAchieved());
         // System.out.println("Cycling Frequency Goal Achieved? " + cyclingFrequencyGoal.wasLastWeeksGoalAchieved());
-
-        // try {
-        //     Connection connection = DatabaseConnection.getConnection();
-        //     ActivityDAO activityDAO = new ActivityDAO(connection);
-
-        //     // Call the getByUserId method
-        //     int userId = 2; // Replace with the user ID you want to query
-        //     List<Activity> activities = activityDAO.getLastWeeksDataByUserId(userId, "Running");
-
-        //     // Print the retrieved activities
-        //     if (activities.isEmpty()) {
-        //         System.out.println("No activity data found for user ID: " + userId);
-        //     } else {
-        //         System.out.println("Activity data retrieved successfully:");
-        //         for (Activity activity : activities) {
-        //             System.out.println("Activity ID: " + activity.getDataId());
-        //             System.out.println("Date: " + activity.getActivityDate());
-        //             System.out.println("Type: " + activity.getActivityType());
-        //             System.out.println("Duration: " + activity.getActivityDuration());
-        //             System.out.println("Distance: " + activity.getActivityDistance());
-        //             System.out.println("---------------------------");
-        //         }
-        //     }
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-        // }
-
-
     }
 
     

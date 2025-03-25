@@ -1,15 +1,14 @@
 package goal;
 
-import goal.GoalType;
 
 public class Goal {
     private int goalId;
     private int userId;
     private GoalType goalType;
-    private String sport;
+    private SportType sport;
     private int targetValue;
 
-    public Goal(int goalId, int userId, GoalType goalType, String sport, int targetValue) {
+    public Goal(int goalId, int userId, GoalType goalType, SportType sport, int targetValue) {
         this.goalId = goalId;
         this.userId = userId;
         this.goalType = goalType;
@@ -41,11 +40,11 @@ public class Goal {
         this.goalType = goalType;
     }
 
-    public String getSport() {
+    public SportType getSport() {
         return sport;
     }
 
-    public void setSport(String sport) {
+    public void setSport(SportType sport) {
         this.sport = sport;
     }
 

@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import data.Activity;
 import data.DatabaseConnection;
-import data.SQLiteDataRetrieval;
 import data.dao.ActivityDAO;
 import goal.FitnessGoal;
 import goal.GoalType;
@@ -16,6 +15,7 @@ import goal.GoalType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import goal.Goal;
 
 public class DistanceGoal extends FitnessGoal {
     public DistanceGoal(int targetValue, String sport) {
@@ -33,30 +33,49 @@ public class DistanceGoal extends FitnessGoal {
             return null;
         }
     }
-    public boolean isThisWeeksGoalAchieved(int userId, String sport) {
-        System.out.println("Pulling this weeks " + sport + " distance data");
+    public boolean isThisWeeksGoalAchieved(Goal goal) {
+        System.out.println("Pulling this week's " + sport + " distance data");
         try {
             Connection connection = DatabaseConnection.getConnection();
             ActivityDAO activityDAO = new ActivityDAO(connection);
-            List<Activity> activities = activityDAO.getThisWeeksDataByUserId(userId, sport);
-            System.out.println(activities);
+            List<Activity> activities = activityDAO.getThisWeeksDataByUserId(goal.getUserId(), goal.getSport());
+    
+            // Calculate the total distance
+            double totalDistance = activities.stream()
+                                             .mapToDouble(Activity::getActivityDistance)
+                                             .sum();
+    
+            System.out.println("Total distance for this week: " + totalDistance);
+            System.out.println("Target distance: " + goal.getTargetValue());
+    
+            // Check if the total distance meets or exceeds the target
+            return totalDistance >= goal.getTargetValue();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         System.out.println("Checking if " + sport + " distance goal is achieved");
-        return true;
+        return false;
     }
-    public boolean wasLastWeeksGoalAchieved(int userId, String sport) {
+    public boolean wasLastWeeksGoalAchieved(Goal goal) {
         System.out.println("Pulling last weeks " + sport + " distance data");
         try {
             Connection connection = DatabaseConnection.getConnection();
             ActivityDAO activityDAO = new ActivityDAO(connection);
-            List<Activity> activities = activityDAO.getLastWeeksDataByUserId(userId, sport);
-            System.out.println(activities);
+            List<Activity> activities = activityDAO.getLastWeeksDataByUserId(goal.getUserId(), goal.getSport());
+            // Calculate the total distance
+            double totalDistance = activities.stream()
+                                             .mapToDouble(Activity::getActivityDistance)
+                                             .sum();
+    
+            System.out.println("Total distance for this week: " + totalDistance);
+            System.out.println("Target distance: " + goal.getTargetValue());
+    
+            // Check if the total distance meets or exceeds the target
+            return totalDistance >= goal.getTargetValue();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Checking if " + sport + " distance goal was achieved");
-        return true;
+        System.out.println("Checking if " + sport + " distance goal is achieved");
+        return false;
     }
 }
