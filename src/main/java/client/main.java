@@ -1,25 +1,10 @@
 package client;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-
-import data.Activity;
-import data.DatabaseConnection;
-import data.dao.ActivityDAO;
 import goal.FitnessGoal;
 import goal.GoalType;
 import goal.SportType;
 import goal.factories.GoalFactory;
 import goal.factories.RunningGoalFactory;
-import goal.factories.SwimmingGoalFactory;
-import pet.Pet;
-import pet.PetHealth;
 import pet.PetHealthStatus;
-import goal.factories.CyclingGoalFactory;
-
-import pet.type.Parrot;
-import pet.type.Turtle;
 import pet.PetBehaviour;
 import pet.PetFactory;
 

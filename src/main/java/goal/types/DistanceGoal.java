@@ -1,10 +1,7 @@
 package goal.types;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import data.Activity;
 import data.DatabaseConnection;
@@ -12,10 +9,6 @@ import data.dao.ActivityDAO;
 import goal.FitnessGoal;
 import goal.GoalType;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import goal.Goal;
 import goal.SportType;
 
 public class DistanceGoal extends FitnessGoal {

@@ -3,7 +3,6 @@ package goal.types;
 import goal.FitnessGoal;
 import goal.GoalType;
 import goal.SportType;
-import goal.Goal;
 
 public class FrequencyGoal extends FitnessGoal {
     public FrequencyGoal(int goalId, int userId, int targetValue, SportType sport) {
