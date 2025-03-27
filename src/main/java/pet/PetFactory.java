@@ -12,12 +12,10 @@ public class PetFactory {
         switch (type.toLowerCase()) {
             case "parrot":
                 Pet parrot = new Parrot(petId, healthStatus);
-                PetBehaviour parrotBehaviour = new PetBehaviour(parrot);
-                return parrotBehaviour;
+                return new PetBehaviour(parrot);
             case "turtle":
                 Pet turtle = new Turtle(petId, healthStatus);
-                PetBehaviour turtleBehaviour = new PetBehaviour(turtle);
-                return turtleBehaviour;
+                return new PetBehaviour(turtle);
             default:
                 throw new IllegalArgumentException("Unknown pet type: " + type);
         }

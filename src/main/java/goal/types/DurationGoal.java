@@ -45,7 +45,7 @@ public class DurationGoal extends FitnessGoal {
     
             System.out.println("Total duration for this week: " + totalDuration);
             System.out.println("Target duration: " + targetValue);
-    
+            System.out.println("------------------------------");
             // Check if the total duration meets or exceeds the target
             return totalDuration >= targetValue;
         } catch (SQLException e) {
@@ -67,7 +67,7 @@ public class DurationGoal extends FitnessGoal {
     
             System.out.println("Total duration for this week: " + totalDuration);
             System.out.println("Target duration: " + targetValue);
-    
+            System.out.println("------------------------------");
             // Check if the total duration meets or exceeds the target
             return totalDuration >= targetValue;
         } catch (SQLException e) {

@@ -46,7 +46,7 @@ public class DistanceGoal extends FitnessGoal {
     
             System.out.println("Total distance for this week: " + totalDistance);
             System.out.println("Target distance: " + targetValue);
-    
+            System.out.println("------------------------------");
             // Check if the total distance meets or exceeds the target
             return totalDistance >= targetValue;
         } catch (SQLException e) {
@@ -68,7 +68,7 @@ public class DistanceGoal extends FitnessGoal {
     
             System.out.println("Total distance for this week: " + totalDistance);
             System.out.println("Target distance: " + targetValue);
-    
+            System.out.println("------------------------------");
             // Check if the total distance meets or exceeds the target
             return totalDistance >= targetValue;
         } catch (SQLException e) {

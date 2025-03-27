@@ -41,7 +41,7 @@ public class FrequencyGoal extends FitnessGoal {
     
             System.out.println("Total frequency for this week: " + totalFrequency);
             System.out.println("Target frequency: " + targetValue);
-    
+            System.out.println("------------------------------");
             // Check if the total frequency meets or exceeds the target
             return totalFrequency >= targetValue;
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class FrequencyGoal extends FitnessGoal {
     
             System.out.println("Total frequency for this week: " + totalFrequency);
             System.out.println("Target frequency: " + targetValue);
-    
+            System.out.println("------------------------------");
             // Check if the total frequency meets or exceeds the target
             return totalFrequency >= targetValue;
         } catch (SQLException e) {

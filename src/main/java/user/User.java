@@ -20,5 +20,15 @@ public class User {
         this.petBehaviour = petBehaviour;
     }
 
+    // Getter for petBehaviour
+    public PetBehaviour getPetBehaviour() {
+        return petBehaviour;
+    }
+
+    // Optionally, you can add a setter if needed
+    public void setPetBehaviour(PetBehaviour petBehaviour) {
+        this.petBehaviour = petBehaviour;
+    }
+
 
 }
