@@ -13,6 +13,7 @@ cursor = conn.cursor()
 #     activityType VARCHAR(50),
 #     activityDuration FLOAT,
 #     activityDistance FLOAT,
+#     activityFrequency INT,
 #     FOREIGN KEY (userId) REFERENCES Users(userId)
 # );
 # """)
@@ -20,7 +21,7 @@ cursor = conn.cursor()
 # Insert a sample record
 cursor.execute("""
 INSERT INTO ActivityData (dataId, userId, activityDate, activityType, activityDuration, activityDistance) VALUES
-(16, 2, '2025-03-18', 'CYCLING', 60.0, 100.0);
+(22, 2, '2025-03-19', 'SWIMMING', 60.0, 100.0);
 """)
 
 # Save and close

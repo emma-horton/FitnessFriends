@@ -1,0 +1,168 @@
+@startuml
+package "data" {
+    class DatabaseConnection {
+        - static final String URL
+        - static Connection connection
+        + static Connection getConnection()
+        + static void disconnect()
+    }
+
+    class Activity {
+        - int dataId
+        - int userId
+        - String activityDate
+        - String activityType
+        - double activityDuration
+        - double activityDistance
+        + Activity(int dataId, int userId, String activityDate, String activityType, double activityDuration, double activityDistance)
+        + Getters and Setters
+    }
+
+    interface DAO<T> {
+        + List<T> getByUserId(int userId) throws SQLException
+    }
+
+    ' class ActivityDAO implements DAO<Activity> {
+    '     - Connection connection
+    '     + ActivityDAO(Connection connection)
+    '     + List<Activity> getByUserId(int userId) throws SQLException
+    '     + List<Activity> getThisWeeksDataByUserId(int userId, SportType sport) throws SQLException
+    '     + List<Activity> getLastWeeksDataByUserId(int userId, SportType sport) throws SQLException
+    ' }
+}
+
+package "goal" {
+    enum GoalType {
+        DISTANCE
+        DURATION
+        FREQUENCY
+    }
+
+    enum SportType {
+        RUNNING
+        SWIMMING
+        CYCLING
+    }
+
+    interface IGoal {
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+
+    abstract class FitnessGoal implements IGoal {
+        - int goalId
+        - int userId
+        - GoalType goalType
+        - int targetValue
+        - SportType sport
+        + FitnessGoal(int goalId, int userId)
+        + Getters and Setters
+        + abstract boolean isThisWeeksGoalAchieved()
+        + abstract boolean wasLastWeeksGoalAchieved()
+    }
+
+    class DistanceGoal extends FitnessGoal {
+        + DistanceGoal(int goalId, int userId, int targetValue, SportType sport)
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+
+    class DurationGoal extends FitnessGoal {
+        + DurationGoal(int goalId, int userId, int targetValue, SportType sport)
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+
+    class FrequencyGoal extends FitnessGoal {
+        + FrequencyGoal(int goalId, int userId, int targetValue, SportType sport)
+        + boolean isThisWeeksGoalAchieved()
+        + boolean wasLastWeeksGoalAchieved()
+    }
+}
+
+package "goal.factories" {
+    abstract class GoalFactory {
+        + abstract FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+    }
+
+    class RunningGoalFactory extends GoalFactory {
+        + FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+    }
+
+    class SwimmingGoalFactory extends GoalFactory {
+        + FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+    }
+
+    class CyclingGoalFactory extends GoalFactory {
+        + FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+    }
+}
+
+package "pet" {
+    enum PetHealthStatus {
+        HEALTHY
+        SICK
+        DEAD
+    }
+
+    class PetHealth {
+        - PetHealthStatus status
+        + PetHealth(PetHealthStatus status)
+        + PetHealthStatus getStatus()
+        + void setStatus(PetHealthStatus status)
+    }
+
+    abstract class Pet {
+        - int petId
+        - PetHealth health
+        + Pet(int petId, PetHealth health)
+        + abstract void eat()
+        + abstract void play()
+        + abstract void move()
+        + abstract void sleep()
+        + abstract void hibernate()
+    }
+
+    class PetBehaviour {
+        - Pet pet
+        + PetBehaviour(Pet pet)
+        + void tryToMove()
+        + void tryToEat()
+        + void tryToPlay()
+    }
+
+    class Parrot extends Pet {
+        + Parrot(int petId, PetHealth health)
+        + void eat()
+        + void play()
+        + void move()
+        + void sleep()
+        + void hibernate()
+    }
+
+    class Turtle extends Pet {
+        + Turtle(int petId, PetHealth health)
+        + void eat()
+        + void play()
+        + void move()
+        + void sleep()
+        + void hibernate()
+    }
+
+    class PetFactory {
+        + static PetBehaviour createPet(String type, int petId, PetHealthStatus health)
+    }
+}
+
+' DatabaseConnection --> ActivityDAO
+' ActivityDAO --> Activity
+' FitnessGoal <|-- DistanceGoal
+' FitnessGoal <|-- DurationGoal
+' FitnessGoal <|-- FrequencyGoal
+' GoalFactory <|-- RunningGoalFactory
+' GoalFactory <|-- SwimmingGoalFactory
+' GoalFactory <|-- CyclingGoalFactory
+' Pet *-- PetHealth
+' PetBehaviour --> Pet
+' PetFactory --> PetBehaviour
+@enduml

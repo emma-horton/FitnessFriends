@@ -18,6 +18,7 @@ public class DistanceGoal extends FitnessGoal {
 
         this.goalType = GoalType.DISTANCE;
         this.sport = sport;
+        this.targetValue = targetValue;
     }
 
     public List<Activity> getAllActivityDataForUser(int userId){

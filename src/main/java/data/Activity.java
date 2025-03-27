@@ -31,7 +31,7 @@ public class Activity {
     public void setActivityDuration(double activityDuration) { this.activityDuration = activityDuration; }
     public double getActivityDistance() { return activityDistance; }
     public void setActivityDistance(double activityDistance) { this.activityDistance = activityDistance; }
-
+    
     @Override
     public String toString() {
         return "Activity{" +

@@ -15,6 +15,8 @@ public abstract class Pet extends PetBehaviour {
     public PetHealth getHealth() {
         return health;
     }
+
+    
     public abstract void eat();
     public abstract void play();
     public abstract void move();

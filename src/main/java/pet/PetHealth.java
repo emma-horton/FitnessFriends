@@ -1,5 +1,4 @@
 package pet;
-import pet.PetHealthStatus;
 import pet.PetHealth;
 public class PetHealth {
     private PetHealthStatus status;
@@ -14,6 +13,11 @@ public class PetHealth {
 
     public void setStatus(PetHealthStatus status) {
         this.status = status;
+    }
+
+    public void updateStatus(PetHealthStatus newStatus) {
+        this.status = newStatus;
+        System.out.println("Pet health status updated to: " + newStatus);
     }
 
 }

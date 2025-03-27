@@ -1,5 +1,6 @@
 package pet;
 import pet.type.Turtle;
+import user.UserProfile;
 import pet.type.Parrot;
 import pet.PetHealth;
 public class PetBehaviour {
@@ -39,4 +40,16 @@ public class PetBehaviour {
             System.out.println("Pet is not healthy enough to play.");
         }
     }
+    public void updateHealth(UserProfile profile) {
+    if (profile.areAllGoalsAchievedThisWeek()) {
+        pet.getHealth().updateStatus(PetHealthStatus.HEALTHY);
+        System.out.println("Your pet is healthy and happy!");
+    } else if (profile.areSomeGoalsAchievedThisWeek()) {
+        pet.getHealth().updateStatus(PetHealthStatus.SICK);
+        System.out.println("Your pet is feeling a bit sick. Complete more goals to improve its health!");
+    } else if (profile.areAllGoalsMissedForTwoWeeks()) {
+        pet.getHealth().updateStatus(PetHealthStatus.DEAD);
+        System.out.println("Your pet has passed away due to neglect. Please take better care next time.");
+    }
+}
 }
