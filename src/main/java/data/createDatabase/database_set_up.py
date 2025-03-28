@@ -6,22 +6,30 @@ cursor = conn.cursor()
 
 # Create a sample table
 # cursor.execute("""
-# CREATE TABLE ActivityData (
-#     dataId INT PRIMARY KEY,
+# CREATE TABLE HabitGoals (
+#     goalId INT PRIMARY KEY,
 #     userId INT,
-#     activityDate VARCHAR(50),
-#     activityType VARCHAR(50),
-#     activityDuration FLOAT,
-#     activityDistance FLOAT,
-#     activityFrequency INT,
+#     goalType VARCHAR(50),
+#     sport VARCHAR(50),
+#     targetValue FLOAT,
 #     FOREIGN KEY (userId) REFERENCES Users(userId)
 # );
 # """)
 
 # Insert a sample record
+# cursor.execute("""
+# INSERT INTO ActivityData (dataId, userId, activityDate, activityType, activityDuration, activityDistance) VALUES
+# (1, 2, '2025-03-27', 'CYCLING', 60.0, 100.0);
+# """)
+# cursor.execute("""
+# INSERT INTO VirtualPets (petId, userId, petName, petType, healthStatus, lastUpdated) VALUES
+# (1, 1, 'Fluffy', 'PARROT', 'HEALTHY', '2025-03-27 10:00:00'),
+# (2, 2, 'Spot', 'TURTLE', 'SICK', '2025-03-27 11:00:00');
+# """)
+
 cursor.execute("""
-INSERT INTO ActivityData (dataId, userId, activityDate, activityType, activityDuration, activityDistance) VALUES
-(22, 2, '2025-03-19', 'SWIMMING', 60.0, 100.0);
+INSERT INTO HabitGoals (goalId, userId, goalType, sport, targetValue) VALUES
+(8, 1, 'Distance', 'CYCLING', 60);
 """)
 
 # Save and close

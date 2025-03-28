@@ -29,6 +29,9 @@ public class User {
     public void setPetBehaviour(PetBehaviour petBehaviour) {
         this.petBehaviour = petBehaviour;
     }
-
+    
+    public UserProfile getProfile() {
+        return profile; // Getter for UserProfile
+    }
 
 }
