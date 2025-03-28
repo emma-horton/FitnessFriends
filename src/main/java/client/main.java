@@ -14,7 +14,7 @@ public class main {
 
             // Login
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Welcome to the Virtual Pet App!");
+            System.out.println("Welcome to Fitness Friends!");
             System.out.print("Enter username: ");
             String username = scanner.nextLine();
             System.out.print("Enter password: ");

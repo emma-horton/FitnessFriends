@@ -4,7 +4,7 @@ import sqlite3
 conn = sqlite3.connect("fitness-friends.db")  
 cursor = conn.cursor()
 
-# Create a sample table
+# # Create a sample table
 # cursor.execute("""
 # CREATE TABLE HabitGoals (
 #     goalId INT PRIMARY KEY,
@@ -27,10 +27,17 @@ cursor = conn.cursor()
 # (2, 2, 'Spot', 'TURTLE', 'SICK', '2025-03-27 11:00:00');
 # """)
 
+# cursor.execute("""
+# INSERT INTO HabitGoals (goalId, userId, goalType, sport, targetValue) VALUES
+# (1, 1, 'Distance', 'RIDE', 10);
+# """)
+
 cursor.execute("""
-INSERT INTO HabitGoals (goalId, userId, goalType, sport, targetValue) VALUES
-(8, 1, 'Distance', 'CYCLING', 60);
+UPDATE HabitGoals
+SET targetValue = 1, goalType = 'FREQUENCY'
+WHERE goalId = 1;
 """)
+
 
 # Save and close
 conn.commit()

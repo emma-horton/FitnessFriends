@@ -6,9 +6,9 @@ cursor = conn.cursor()
 #     SELECT * FROM activitydata WHERE activityDate BETWEEN DATE('now', '-14 days') AND DATE('now', '-7 days') AND  userId = 2 AND activityType = "SWIMMING";
 #     """)
 cursor.execute("""
-    SELECT * FROM habitgoals WHERE userId = 1;
+    SELECT * FROM activityData WHERE activityDate >= DATE('now', '-7 days') AND userId = 1 AND activityType = "RIDE";
     """)
-# cursor.execute("DROP TABLE habitgoals;")
+# cursor.execute("DROP TABLE HabitGoals;")
 print(cursor.fetchall())  
 
 conn.close()

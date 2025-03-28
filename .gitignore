@@ -8,3 +8,4 @@ target/
 # Ignore IDE-specific files
 .idea/
 *.iml
+src/main/java/data/createDatabase/
