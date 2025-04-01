@@ -128,7 +128,6 @@ def store_tokens(access_token, refresh_token, expires_at, user_id, strava_user_i
         INSERT OR REPLACE INTO StravaAccounts (userId, stravaUserId, access_token, refresh_token, expires_at)
         VALUES (?, ?, ?, ?, ?)
     """, (user_id, strava_user_id, access_token, refresh_token, expires_at))
-    conn.commit()
     conn.close()
 
 def get_athlete_activities(access_token, after=None):
@@ -169,7 +168,6 @@ def insert_activities_into_db(activities, user_id):
         except sqlite3.Error as e:
             print(f"Database error: {e}")
 
-    conn.commit()
     conn.close()
     print("Activities inserted into the database successfully!")
 

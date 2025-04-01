@@ -138,7 +138,7 @@ public class main {
                         case 3:
                             // Amend an existing habit goal
                             HabitGoalDAO amendGoalDAO = new HabitGoalDAO(connection);
-                            amendHabitGoalForUser(scanner, amendGoalDAO, user.getUserId());
+                            amendHabitGoalForUser(scanner, amendGoalDAO, user.getUserId(), user);
                             break;
 
                         case 4:
@@ -163,47 +163,6 @@ public class main {
                     e.printStackTrace();
                 }
             }
-        }
-    }
-
-    private static void amendHabitGoalForUser(Scanner scanner, HabitGoalDAO habitGoalDAO, int userId) {
-        try {
-            // Retrieve and display the user's current goals
-            List<goal.FitnessGoal> goals = habitGoalDAO.getGoalsForUser(userId);
-            if (goals.isEmpty()) {
-                System.out.println("You have no existing goals to amend.");
-                return;
-            }
-
-            System.out.println("Your current goals:");
-            for (int i = 0; i < goals.size(); i++) {
-                System.out.println((i + 1) + ". " + goals.get(i));
-            }
-
-            // Prompt the user to select a goal to amend
-            System.out.print("Enter the number of the goal you want to amend: ");
-            int goalIndex = scanner.nextInt() - 1;
-            scanner.nextLine(); // Consume newline
-
-            if (goalIndex < 0 || goalIndex >= goals.size()) {
-                System.out.println("Invalid choice. Returning to the menu.");
-                return;
-            }
-
-            goal.FitnessGoal selectedGoal = goals.get(goalIndex);
-
-            // Prompt the user to update the target value
-            System.out.println("Selected goal: " + selectedGoal);
-            System.out.print("Enter the new target value for this goal: ");
-            int newTargetValue = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            // Update the goal in the database
-            habitGoalDAO.updateHabitGoal(selectedGoal.getGoalId(), newTargetValue);
-            System.out.println("Goal updated successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Failed to amend the habit goal. Please try again.");
         }
     }
 
@@ -364,6 +323,53 @@ public class main {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to create a habit goal. Please try again.");
+        }
+    }
+
+    private static void amendHabitGoalForUser(Scanner scanner, HabitGoalDAO habitGoalDAO, int userId, User user) {
+        try {
+            // Retrieve and display the user's current goals
+            List<goal.FitnessGoal> goals = habitGoalDAO.getGoalsForUser(userId);
+            if (goals.isEmpty()) {
+                System.out.println("You have no existing goals to amend.");
+                return;
+            }
+    
+            System.out.println("Your current goals:");
+            for (int i = 0; i < goals.size(); i++) {
+                System.out.println((i + 1) + ". " + goals.get(i));
+            }
+    
+            // Prompt the user to select a goal to amend
+            System.out.print("Enter the number of the goal you want to amend: ");
+            int goalIndex = scanner.nextInt() - 1;
+            scanner.nextLine(); // Consume newline
+    
+            if (goalIndex < 0 || goalIndex >= goals.size()) {
+                System.out.println("Invalid choice. Returning to the menu.");
+                return;
+            }
+    
+            goal.FitnessGoal selectedGoal = goals.get(goalIndex);
+    
+            // Prompt the user to update the target value
+            System.out.println("Selected goal: " + selectedGoal);
+            System.out.print("Enter the new target value for this goal: ");
+            int newTargetValue = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+    
+            // Update the goal in the database
+            habitGoalDAO.updateHabitGoal(selectedGoal.getGoalId(), newTargetValue);
+            System.out.println("Goal updated successfully!");
+    
+            // **Refresh the UserProfile with updated goals**
+            List<goal.FitnessGoal> updatedGoals = habitGoalDAO.getGoalsForUser(userId);
+            System.out.println("Updated goals from database: " + updatedGoals); // Debug statement
+            user.getProfile().setGoals(updatedGoals); // Update the UserProfile with new goals
+            System.out.println("User profile updated with new goals: " + user.getProfile().getGoals()); // Debug statement
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to amend the habit goal. Please try again.");
         }
     }
 

@@ -35,7 +35,6 @@ public class HabitGoalDAO {
             pstmt.setInt(1, newTargetValue);
             pstmt.setInt(2, goalId);
             pstmt.executeUpdate();
-            connection.commit(); // Explicitly commit the transaction
         }
     }
 

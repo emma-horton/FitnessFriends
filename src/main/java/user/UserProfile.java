@@ -22,4 +22,12 @@ public class UserProfile {
             goal.isThisWeeksGoalAchieved() || goal.wasLastWeeksGoalAchieved()
         );
     }
+
+    public void setGoals(List<FitnessGoal> goals) {
+        this.goals = goals;
+    }
+
+    public List<FitnessGoal> getGoals() {
+        return goals;
+    }
 }
