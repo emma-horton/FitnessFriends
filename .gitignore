@@ -5,7 +5,14 @@ target/
 # Ignore OS-specific files
 .DS_Store
 
+# Ignore database file
+fitness-friends.db
+
 # Ignore IDE-specific files
 .idea/
 *.iml
 src/main/java/data/createDatabase/
+src/main/java/data/createDatabase/*
+
+# Ignore config.json in the dao directory
+src/main/java/data/dao/config.json
