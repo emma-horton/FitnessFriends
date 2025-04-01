@@ -11,11 +11,14 @@ import user.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) {
-        try (Connection connection = DatabaseConnection.getConnection()) {
+        Connection connection = null; // Declare the connection outside the try block
+        try {
+            connection = DatabaseConnection.getConnection(); // Initialize the connection
             UserDAO userDAO = new UserDAO(connection);
 
             Scanner scanner = new Scanner(System.in);
@@ -32,18 +35,19 @@ public class main {
                 String username = scanner.nextLine();
                 System.out.print("Enter a password: ");
                 String password = scanner.nextLine();
-            
+
                 if (userDAO.registerUser(username, password)) {
                     System.out.println("Registration successful!");
-            
+
                     int userId = userDAO.getUserIdByUsername(username); // Retrieve the userId for the new user
                     System.out.println(userId);
+
                     // Retry mechanism for Strava account connection
                     boolean isStravaConnected = false;
                     while (!isStravaConnected) {
                         System.out.println("Please authorize your Strava account.");
                         int exitCode = authorizeStravaAccount(userId); // Call the Strava authorization method
-            
+
                         if (exitCode == 0) {
                             System.out.println("Strava account authorized successfully!");
                             isStravaConnected = true; // Exit the loop
@@ -54,19 +58,19 @@ public class main {
                             System.out.print("Enter your choice: ");
                             int retryChoice = scanner.nextInt();
                             scanner.nextLine(); // Consume newline
-            
+
                             if (retryChoice == 2) {
                                 System.out.println("Exiting registration. Please try again later.");
                                 return; // Exit the registration process
                             }
                         }
                     }
-            
+
                     // Create a pet for the user
                     PetDAO petDAO = new PetDAO(connection);
                     HabitGoalDAO habitGoalDAO = new HabitGoalDAO(connection);
                     createPetForUser(scanner, petDAO, userId);
-            
+
                     // Create a habit goal for the user
                     createHabitGoalForUser(scanner, habitGoalDAO, userId);
                 } else {
@@ -102,21 +106,104 @@ public class main {
                 // Pull activity data from Strava
                 pullActivityData(user.getUserId());
 
-                user.getPetBehaviour().updateHealth(user.getProfile());
+                // Menu for user actions
+                boolean exit = false;
+                while (!exit) {
+                    System.out.println("\nWhat would you like to do?");
+                    System.out.println("1. View your pet");
+                    System.out.println("2. Create a new habit goal");
+                    System.out.println("3. Amend an existing habit goal");
+                    System.out.println("4. Exit");
+                    System.out.print("Enter your choice: ");
+                    int actionChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
 
-                // Simulate user interaction with the pet
-                System.out.println("Interacting with your pet:");
-                user.getPetBehaviour().tryToMove();
-                user.getPetBehaviour().tryToEat();
-                user.getPetBehaviour().tryToPlay();
+                    switch (actionChoice) {
+                        case 1:
+                            // View pet details
+                            System.out.println("Interacting with your pet:");
+                            user.getPetBehaviour().updateHealth(user.getProfile());
+                            user.getPetBehaviour().tryToMove();
+                            user.getPetBehaviour().tryToEat();
+                            user.getPetBehaviour().tryToPlay();
+                            System.out.println("Your pet's current health status: " + user.getPetBehaviour().getPet().getHealth().getStatus());
+                            break;
 
-                // Display the pet's updated health status
-                System.out.println("Your pet's current health status: " + user.getPetBehaviour().getPet().getHealth().getStatus());
-            } else {
-                System.out.println("Invalid choice. Exiting...");
+                        case 2:
+                            // Create a new habit goal
+                            HabitGoalDAO habitGoalDAO = new HabitGoalDAO(connection);
+                            createHabitGoalForUser(scanner, habitGoalDAO, user.getUserId());
+                            break;
+
+                        case 3:
+                            // Amend an existing habit goal
+                            HabitGoalDAO amendGoalDAO = new HabitGoalDAO(connection);
+                            amendHabitGoalForUser(scanner, amendGoalDAO, user.getUserId());
+                            break;
+
+                        case 4:
+                            // Exit
+                            System.out.println("Goodbye! See you next time.");
+                            exit = true;
+                            break;
+
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            // Close the connection explicitly
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void amendHabitGoalForUser(Scanner scanner, HabitGoalDAO habitGoalDAO, int userId) {
+        try {
+            // Retrieve and display the user's current goals
+            List<goal.FitnessGoal> goals = habitGoalDAO.getGoalsForUser(userId);
+            if (goals.isEmpty()) {
+                System.out.println("You have no existing goals to amend.");
+                return;
+            }
+
+            System.out.println("Your current goals:");
+            for (int i = 0; i < goals.size(); i++) {
+                System.out.println((i + 1) + ". " + goals.get(i));
+            }
+
+            // Prompt the user to select a goal to amend
+            System.out.print("Enter the number of the goal you want to amend: ");
+            int goalIndex = scanner.nextInt() - 1;
+            scanner.nextLine(); // Consume newline
+
+            if (goalIndex < 0 || goalIndex >= goals.size()) {
+                System.out.println("Invalid choice. Returning to the menu.");
+                return;
+            }
+
+            goal.FitnessGoal selectedGoal = goals.get(goalIndex);
+
+            // Prompt the user to update the target value
+            System.out.println("Selected goal: " + selectedGoal);
+            System.out.print("Enter the new target value for this goal: ");
+            int newTargetValue = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            // Update the goal in the database
+            habitGoalDAO.updateHabitGoal(selectedGoal.getGoalId(), newTargetValue);
+            System.out.println("Goal updated successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to amend the habit goal. Please try again.");
         }
     }
 
@@ -190,7 +277,7 @@ public class main {
             e.printStackTrace();
         }
     }
-
+    
     private static void createPetForUser(Scanner scanner, PetDAO petDAO, int userId) {
         try {
             System.out.println("Let's create a pet for you!");

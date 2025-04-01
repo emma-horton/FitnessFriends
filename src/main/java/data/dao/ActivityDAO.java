@@ -53,7 +53,6 @@ public class ActivityDAO implements DAO<Activity> {
             } catch (SQLException e) {
                 System.err.println("Error closing resources: " + e.getMessage());
             }
-            disconnect();
         }
         return activityList;
     }
@@ -88,7 +87,6 @@ public class ActivityDAO implements DAO<Activity> {
             } catch (SQLException e) {
                 System.err.println("Error closing resources: " + e.getMessage());
             }
-            disconnect();
         }
         return activityList;
     }
@@ -123,7 +121,6 @@ public class ActivityDAO implements DAO<Activity> {
             } catch (SQLException e) {
                 System.err.println("Error closing resources: " + e.getMessage());
             }
-            disconnect();
         }
         return activityList;
     }
