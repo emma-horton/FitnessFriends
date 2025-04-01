@@ -33,5 +33,11 @@ public class User {
     public UserProfile getProfile() {
         return profile; // Getter for UserProfile
     }
+    public int getUserId() {
+        return userId;
+    }
+    public String getUsername() {
+        return username;
+    }
 
 }

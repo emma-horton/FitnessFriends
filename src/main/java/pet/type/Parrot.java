@@ -11,7 +11,7 @@ public class Parrot extends Pet {
         System.out.println("Crunch! Crunch! Tasty Seeds");
     }
     public void play() {
-        System.out.println("Squark! Squark! Lets play spin the bottle!");
+        System.out.println("Squark! Squark! Lets play walk the plank!");
     }
     public void move() {
         System.out.println("Swooshing through the air");

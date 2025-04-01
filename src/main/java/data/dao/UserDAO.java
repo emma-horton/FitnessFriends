@@ -76,4 +76,25 @@ public class UserDAO {
         }
         return goals;
     }
+   
+    public boolean registerUser(String username, String password) throws SQLException {
+        String sql = "INSERT INTO Users (username, password) VALUES (?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            int rowsInserted = pstmt.executeUpdate();
+            return rowsInserted > 0; // Return true if the user was successfully registered
+        }
+    }
+    public int getUserIdByUsername(String username) throws SQLException {
+        String sql = "SELECT userId FROM Users WHERE username = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("userId");
+            }
+        }
+        return -1; // Return -1 if the user is not found
+    }
 }
