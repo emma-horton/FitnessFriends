@@ -16,6 +16,18 @@ public class PetDAO {
         this.connection = connection;
     }
 
+    // Method to create a new pet for a user
+    public void createPet(int userId, String petName, String petType, String healthStatus) throws SQLException {
+        String sql = "INSERT INTO VirtualPets (userId, petName, petType, healthStatus, lastUpdated) VALUES (?, ?, ?, ?, datetime('now'))";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, petName);
+            pstmt.setString(3, petType);
+            pstmt.setString(4, healthStatus);
+            pstmt.executeUpdate();
+        }
+    }
+
     public PetBehaviour getPetForUser(int userId) throws SQLException {
         String sql = "SELECT * FROM VirtualPets WHERE userId = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {

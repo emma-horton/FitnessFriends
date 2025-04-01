@@ -66,7 +66,7 @@ public class DistanceGoal extends FitnessGoal {
                                              .mapToDouble(Activity::getActivityDistance)
                                              .sum();
     
-            System.out.println("Total distance for this week: " + totalDistance);
+            System.out.println("Total distance for last week: " + totalDistance);
             System.out.println("Target distance: " + targetValue);
             System.out.println("------------------------------");
             // Check if the total distance meets or exceeds the target

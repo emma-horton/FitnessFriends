@@ -49,10 +49,9 @@ def authorize_strava_account(user_id, authorization_code=None):
         return
 
     # Exchange the authorization code for tokens
-    access_token, refresh_token, expires_at = get_initial_tokens(authorization_code)
-    store_tokens(access_token, refresh_token, expires_at, user_id)
+    access_token, refresh_token, expires_at, strava_user_id = get_initial_tokens(authorization_code)
+    store_tokens(access_token, refresh_token, expires_at, user_id, strava_user_id)
     print("Strava account authorized and tokens stored successfully!")
-
 def authorize():
     """
     Redirect the user to the Strava authorization page.
@@ -79,7 +78,13 @@ def get_initial_tokens(authorization_code):
     response = requests.post(TOKEN_URL, data=payload)
     response.raise_for_status()  # Raise an exception for HTTP errors
     tokens = response.json()
-    return tokens["access_token"], tokens["refresh_token"], tokens["expires_at"]
+
+    # Extract the Strava user ID from the response
+    strava_user_id = tokens.get("athlete", {}).get("id")  # Ensure the "athlete" object exists
+    if not strava_user_id:
+        raise ValueError("Failed to retrieve Strava user ID from the API response.")
+
+    return tokens["access_token"], tokens["refresh_token"], tokens["expires_at"], strava_user_id
 
 def refresh_access_token(refresh_token):
     """
@@ -113,16 +118,16 @@ def get_stored_tokens(user_id):
         return row[0], row[1], row[2]
     return None, None, None
 
-def store_tokens(access_token, refresh_token, expires_at, user_id):
+def store_tokens(access_token, refresh_token, expires_at, user_id, strava_user_id):
     """
     Store or update tokens for a user in the database.
     """
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT OR REPLACE INTO stravaAccounts (userId, access_token, refresh_token, expires_at)
-        VALUES (?, ?, ?, ?)
-    """, (user_id, access_token, refresh_token, expires_at))
+        INSERT OR REPLACE INTO StravaAccounts (userId, stravaUserId, access_token, refresh_token, expires_at)
+        VALUES (?, ?, ?, ?, ?)
+    """, (user_id, strava_user_id, access_token, refresh_token, expires_at))
     conn.commit()
     conn.close()
 

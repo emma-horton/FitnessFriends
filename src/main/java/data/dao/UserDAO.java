@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserDAO {
     private Connection connection;
 
@@ -18,30 +20,31 @@ public class UserDAO {
         this.connection = connection;
     }
 
-    public User getUserByUsernameAndPassword(String username, String password) throws SQLException {
-        String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
+    public User getUserByUsernameAndPassword(String username, String password) {
+        String sql = "SELECT * FROM Users WHERE username = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
-
+    
             if (rs.next()) {
-                int userId = rs.getInt("userId");
-                String userUsername = rs.getString("username");
-
-                // Retrieve goals for the user
-                List<goal.FitnessGoal> goals = getGoalsForUser(userId);
-
-                // Retrieve pet for the user
-                PetDAO petDAO = new PetDAO(connection);
-                PetBehaviour petBehaviour = petDAO.getPetForUser(userId);
-
-                // Create UserProfile and User objects
-                UserProfile userProfile = new UserProfile(goals);
-                return new User(userId, userUsername, userProfile, petBehaviour);
+                String storedHashedPassword = rs.getString("password");
+                if (BCrypt.checkpw(password, storedHashedPassword)) { // Verify the password
+                    int userId = rs.getInt("userId");
+    
+                    // Retrieve the user's goals
+                    List<goal.FitnessGoal> goals = getGoalsForUser(userId);
+    
+                    // Create the UserProfile
+                    UserProfile profile = new UserProfile(goals);
+    
+                    // Return the User object with the profile
+                    return new User(userId, username, profile, null); // PetBehaviour will be set later
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null; // User not found
+        return null; // Return null if authentication fails
     }
 
     private List<goal.FitnessGoal> getGoalsForUser(int userId) throws SQLException {
@@ -50,16 +53,16 @@ public class UserDAO {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
-
+    
             while (rs.next()) {
                 int goalId = rs.getInt("goalId");
                 String goalType = rs.getString("goalType");
                 String sport = rs.getString("sport");
                 int targetValue = rs.getInt("targetValue");
-
+    
                 goal.GoalType goalTypeEnum = goal.GoalType.valueOf(goalType.toUpperCase());
                 goal.SportType sportTypeEnum = goal.SportType.valueOf(sport.toUpperCase());
-
+    
                 // Create the appropriate goal object
                 switch (goalTypeEnum) {
                     case DISTANCE:
@@ -77,14 +80,38 @@ public class UserDAO {
         return goals;
     }
    
-    public boolean registerUser(String username, String password) throws SQLException {
+    public boolean registerUser(String username, String password) {
+        // Check if the username already exists
+        if (isUsernameTaken(username)) {
+            System.out.println("Username already exists. Please choose a different username.");
+            return false; // Registration fails if the username is not unique
+        }
+    
         String sql = "INSERT INTO Users (username, password) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hash the password using BCrypt
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            int rowsInserted = pstmt.executeUpdate();
-            return rowsInserted > 0; // Return true if the user was successfully registered
+            pstmt.setString(2, hashedPassword);
+            pstmt.executeUpdate();
+            return true; // Registration successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Registration fails due to an SQL error
         }
+    }
+
+    private boolean isUsernameTaken(String username) {
+        String sql = "SELECT COUNT(*) FROM Users WHERE username = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // If the count is greater than 0, the username is taken
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Default to false if an error occurs
     }
     public int getUserIdByUsername(String username) throws SQLException {
         String sql = "SELECT userId FROM Users WHERE username = ?";

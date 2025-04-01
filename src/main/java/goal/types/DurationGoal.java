@@ -65,7 +65,7 @@ public class DurationGoal extends FitnessGoal {
                                              .mapToDouble(Activity::getActivityDuration)
                                              .sum();
     
-            System.out.println("Total duration for this week: " + totalDuration);
+            System.out.println("Total duration for last week: " + totalDuration);
             System.out.println("Target duration: " + targetValue);
             System.out.println("------------------------------");
             // Check if the total duration meets or exceeds the target
