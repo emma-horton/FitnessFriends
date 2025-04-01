@@ -1,13 +1,13 @@
-import json
-import os
 import sqlite3
 import time
 import requests
 from datetime import datetime, timedelta
 import sys
+import json
+import os
 
 # Load configuration from config.json
-CONFIG_FILE = "config.json"
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
 
 def load_config():
     """
@@ -27,10 +27,8 @@ def load_config():
 # Load the configuration
 config = load_config()
 
-# Database path
+# Use values from the config file
 DB_PATH = config["DB_PATH"]
-
-# Strava API credentials
 CLIENT_ID = config["CLIENT_ID"]
 CLIENT_SECRET = config["CLIENT_SECRET"]
 REDIRECT_URI = config["REDIRECT_URI"]
