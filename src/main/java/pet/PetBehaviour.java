@@ -1,8 +1,5 @@
 package pet;
-import pet.type.Turtle;
 import user.UserProfile;
-import pet.type.Parrot;
-import pet.PetHealth;
 public class PetBehaviour {
 
     protected Pet pet;
@@ -12,9 +9,8 @@ public class PetBehaviour {
     }
 
     public void tryToMove() {
-        // Check if pet is healthy
         if (pet.getHealth().getStatus() == PetHealthStatus.HEALTHY) {
-            pet.move();  // Call the move method if healthy
+            pet.move();  
         } else if (pet.getHealth().getStatus() == PetHealthStatus.SICK) {
             pet.hibernate();
             pet.sleep();
@@ -24,18 +20,16 @@ public class PetBehaviour {
     }
 
     public void tryToEat() {
-        // Check if pet is healthy
         if (pet.getHealth().getStatus() == PetHealthStatus.HEALTHY) {
-            pet.eat();  // Call the eat method if healthy
+            pet.eat(); 
         } else if (pet.getHealth().getStatus() == PetHealthStatus.SICK) {
             System.out.println("Pet is not healthy enough to eat.");
         }
     }
 
     public void tryToPlay() {
-        // Check if pet is healthy
         if (pet.getHealth().getStatus() == PetHealthStatus.HEALTHY) {
-            pet.play();  // Call the play method if healthy
+            pet.play(); 
         } else if (pet.getHealth().getStatus() == PetHealthStatus.SICK){
             System.out.println("Pet is not healthy enough to play.");
         }

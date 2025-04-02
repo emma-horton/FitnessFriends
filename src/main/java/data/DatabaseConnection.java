@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     private static final String URL = "jdbc:sqlite:fitness-friends.db";
-    // private static final String USER = "root";
-    // private static final String PASSWORD = "password";
     private static Connection connection;
 
     private DatabaseConnection() {}

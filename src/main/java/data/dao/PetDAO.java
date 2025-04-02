@@ -38,12 +38,13 @@ public class PetDAO {
                 int petId = rs.getInt("petId");
                 String petType = rs.getString("petType");
                 String healthStatus = rs.getString("healthStatus");
+                String name = rs.getString("petName");
 
                 // Convert healthStatus to PetHealthStatus enum
                 PetHealthStatus petHealthStatus = PetHealthStatus.valueOf(healthStatus.toUpperCase());
 
                 // Use PetFactory to create the PetBehaviour object
-                return PetFactory.createPet(petType, petId, petHealthStatus);
+                return PetFactory.createPet(petType, petId, petHealthStatus, name);
             }
         }
         throw new SQLException("No pet found for user with ID: " + userId);

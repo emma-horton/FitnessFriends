@@ -3,17 +3,26 @@ package pet;
 public abstract class Pet extends PetBehaviour {
     private int petId;
     private PetHealth health;
+    private String name;
 
-    public Pet(int petId, PetHealth health) {
+    public Pet(int petId, PetHealth health, String name) {
         super(null);
         this.petId = petId;
         this.health = health;
+        this.name = name;
     }
     public int getPetId() {
         return petId;
     }
     public PetHealth getHealth() {
         return health;
+    }
+
+    public String getName() {
+        if (name == null || name.isEmpty()) {
+            return name; 
+        }
+        return name.substring(0, 1).toUpperCase() + name.substring(1); 
     }
 
     

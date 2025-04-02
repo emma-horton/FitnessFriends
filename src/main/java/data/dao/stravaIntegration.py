@@ -204,9 +204,9 @@ def main():
         print("  pull_activity_data - Pull activity data for the user")
         return
 
-    user_id = int(sys.argv[1])  # Get the user_id from the command-line arguments
-    action = sys.argv[2] if len(sys.argv) > 2 else "authorize"  # Default action is "authorize"
-    authorization_code = sys.argv[3] if len(sys.argv) > 3 else None  # Optional authorization code
+    user_id = int(sys.argv[1])  
+    action = sys.argv[2] if len(sys.argv) > 2 else "authorize"  
+    authorization_code = sys.argv[3] if len(sys.argv) > 3 else None  
 
     if action == "authorize":
         authorize_strava_account(user_id, authorization_code)

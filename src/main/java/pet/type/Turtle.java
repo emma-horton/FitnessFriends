@@ -2,8 +2,8 @@ package pet.type;
 import pet.Pet;
 import pet.PetHealth;
 public class Turtle extends Pet {
-    public Turtle(int petId, PetHealth health) {
-        super(petId, health);
+    public Turtle(int petId, PetHealth health, String name) {
+        super(petId, health, name);
     }
     public void eat() {
         System.out.println("Munch! Munch! Tasty Salad Treat");
@@ -12,6 +12,7 @@ public class Turtle extends Pet {
         System.out.println("Wiggle Wiggle. Lets play catch!");
     }
     public void move() {
+        System.out.println("G'day! I'm " + getName());
         System.out.println("Swoodh! Swoodh! Swimming in the water");
     }
     public void sleep() {

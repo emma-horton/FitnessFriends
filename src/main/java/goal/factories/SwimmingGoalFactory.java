@@ -9,7 +9,6 @@ import goal.types.FrequencyGoal;
 
 public class SwimmingGoalFactory extends GoalFactory {
     @Override
-    //public FitnessGoal createGoal(GoalType goalType, int targetValue, String sport) {
     public FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport) {
         switch (goalType) {
             case DISTANCE:

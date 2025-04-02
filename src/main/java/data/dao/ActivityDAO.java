@@ -10,20 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityDAO implements DAO<Activity> {
+public class ActivityDAO{
     private Connection connection;
 
     public ActivityDAO(Connection connection) {
         this.connection = connection;
     }
 
-
-    // **New Method to Disconnect the Database Connection**
     public void disconnect() {
         DatabaseConnection.disconnect();
     }
 
-    @Override
     public List<Activity> getByUserId(int userId) throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
