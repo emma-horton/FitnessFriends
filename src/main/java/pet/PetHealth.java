@@ -1,7 +1,8 @@
 package pet;
-import pet.PetHealth;
+
 public class PetHealth {
     private PetHealthStatus status;
+    private PetBehaviour behaviour;
 
     public PetHealth(PetHealthStatus status) {
         this.status = status;
@@ -19,5 +20,4 @@ public class PetHealth {
         this.status = newStatus;
         System.out.println("Pet health status updated to: " + newStatus);
     }
-
 }

@@ -42,16 +42,19 @@ def authorize_strava_account(user_id, authorization_code=None):
     """
     Handles the Strava authorization process for a user.
     """
+    print(f"Authorizing Strava account for user_id: {user_id}")
     if not authorization_code:
-        print("Redirecting to Strava authorization page...")
-        authorize()  # Redirect the user to the Strava authorization page
         print("No authorization code provided. Please provide it as a command-line argument.")
         return
 
-    # Exchange the authorization code for tokens
-    access_token, refresh_token, expires_at, strava_user_id = get_initial_tokens(authorization_code)
-    store_tokens(access_token, refresh_token, expires_at, user_id, strava_user_id)
-    print("Strava account authorized and tokens stored successfully!")
+    try:
+        # Exchange the authorization code for tokens
+        access_token, refresh_token, expires_at, strava_user_id = get_initial_tokens(authorization_code)
+        print(f"Tokens received: Access Token: {access_token}, Refresh Token: {refresh_token}, Expires At: {expires_at}")
+        store_tokens(access_token, refresh_token, expires_at, user_id, strava_user_id)
+        print("Strava account authorized and tokens stored successfully!")
+    except Exception as e:
+        print(f"Error during Strava authorization: {e}")
 def authorize():
     """
     Redirect the user to the Strava authorization page.
@@ -122,13 +125,21 @@ def store_tokens(access_token, refresh_token, expires_at, user_id, strava_user_i
     """
     Store or update tokens for a user in the database.
     """
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT OR REPLACE INTO StravaAccounts (userId, stravaUserId, access_token, refresh_token, expires_at)
-        VALUES (?, ?, ?, ?, ?)
-    """, (user_id, strava_user_id, access_token, refresh_token, expires_at))
-    conn.close()
+    print(f"Storing tokens for user_id: {user_id}, strava_user_id: {strava_user_id}")
+    print(f"Access Token: {access_token}, Refresh Token: {refresh_token}, Expires At: {expires_at}")
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT OR REPLACE INTO StravaAccounts (userId, stravaUserId, access_token, refresh_token, expires_at)
+            VALUES (?, ?, ?, ?, ?)
+        """, (user_id, strava_user_id, access_token, refresh_token, expires_at))
+        conn.commit()
+        print("Tokens stored successfully!")
+    except sqlite3.Error as e:
+        print(f"Database error while storing tokens: {e}")
+    finally:
+        conn.close()
 
 def get_athlete_activities(access_token, after=None):
     """
@@ -167,7 +178,7 @@ def insert_activities_into_db(activities, user_id):
             print(f"Missing key in activity data: {e}")
         except sqlite3.Error as e:
             print(f"Database error: {e}")
-
+    conn.commit()
     conn.close()
     print("Activities inserted into the database successfully!")
 

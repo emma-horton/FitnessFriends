@@ -10,6 +10,8 @@ public abstract class Pet extends PetBehaviour {
         this.petId = petId;
         this.health = health;
         this.name = name;
+        super.setPet(this); // Set the pet reference after initialization
+        updateState(); // Call updateState() after the pet is fully initialized
     }
     public int getPetId() {
         return petId;

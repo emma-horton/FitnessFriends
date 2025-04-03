@@ -1,39 +1,43 @@
 package pet;
+import pet.state.PetState;
+import pet.state.HealthyState;
+import pet.state.SickState;
 import user.UserProfile;
-public class PetBehaviour {
+import pet.state.DeadState;
 
-    protected Pet pet;
+public class PetBehaviour {
+    private Pet pet;
+    private PetState state;
 
     public PetBehaviour(Pet pet) {
         this.pet = pet;
-    }
-
-    public void tryToMove() {
-        if (pet.getHealth().getStatus() == PetHealthStatus.HEALTHY) {
-            pet.move();  
-        } else if (pet.getHealth().getStatus() == PetHealthStatus.SICK) {
-            pet.hibernate();
-            pet.sleep();
-        } else {
-            System.out.println("RIP");
+        if (pet != null) {
+            updateState(); // Initialize the state only if the pet is not null
         }
     }
 
-    public void tryToEat() {
-        if (pet.getHealth().getStatus() == PetHealthStatus.HEALTHY) {
-            pet.eat(); 
-        } else if (pet.getHealth().getStatus() == PetHealthStatus.SICK) {
-            System.out.println("Pet is not healthy enough to eat.");
+    public void updateState() {
+        switch (pet.getHealth().getStatus()) {
+            case HEALTHY:
+                state = new HealthyState();
+                break;
+            case SICK:
+                state = new SickState();
+                break;
+            case DEAD:
+                state = new DeadState();
+                break;
         }
     }
 
-    public void tryToPlay() {
-        if (pet.getHealth().getStatus() == PetHealthStatus.HEALTHY) {
-            pet.play(); 
-        } else if (pet.getHealth().getStatus() == PetHealthStatus.SICK){
-            System.out.println("Pet is not healthy enough to play.");
-        }
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
+
+    public Pet getPet() {
+        return pet;
+    }
+
     public void updateHealth(UserProfile profile) {
         if (profile.areAllGoalsAchievedThisWeek()) {
             pet.getHealth().updateStatus(PetHealthStatus.HEALTHY);
@@ -47,7 +51,15 @@ public class PetBehaviour {
         }
     }
 
-    public Pet getPet() {
-        return pet;
+    public void tryToMove() {
+        state.move(pet);
+    }
+
+    public void tryToEat() {
+        state.eat(pet);
+    }
+
+    public void tryToPlay() {
+        state.play(pet);
     }
 }
