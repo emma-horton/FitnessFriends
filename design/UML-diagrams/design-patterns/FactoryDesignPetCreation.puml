@@ -1,0 +1,72 @@
+@startuml
+title Factory Design Pattern for Pet Creation
+
+class PetBehaviour {
+    - Pet pet
+    - PetState state
+    + PetBehaviour(Pet pet)
+    + void updateState()
+    + void setPet(Pet pet)
+    + Pet getPet()
+    + void tryToMove()
+    + void tryToEat()
+    + void tryToPlay()
+}
+
+abstract class Pet {
+    - int petId
+    - PetHealth health
+    - String name
+    + Pet(int petId, PetHealth health, String name)
+    + int getPetId()
+    + PetHealth getHealth()
+    + String getName()
+    + abstract void eat()
+    + abstract void play()
+    + abstract void move()
+    + abstract void sleep()
+    + abstract void hibernate()
+}
+
+class Parrot extends Pet {
+    + Parrot(int petId, PetHealth health, String name)
+    + void eat()
+    + void play()
+    + void move()
+    + void sleep()
+    + void hibernate()
+}
+
+class Turtle extends Pet {
+    + Turtle(int petId, PetHealth health, String name)
+    + void eat()
+    + void play()
+    + void move()
+    + void sleep()
+    + void hibernate()
+}
+
+class PetFactory {
+    + static PetBehaviour createPet(String type, int petId, PetHealthStatus health, String name)
+}
+
+class PetHealth {
+    - PetHealthStatus status
+    + PetHealth(PetHealthStatus status)
+    + PetHealthStatus getStatus()
+    + void setStatus(PetHealthStatus status)
+    + void updateStatus(PetHealthStatus newStatus)
+}
+
+enum PetHealthStatus {
+    HEALTHY
+    SICK
+    DEAD
+}
+
+PetFactory --> PetBehaviour : creates
+PetBehaviour --> Pet : uses
+Pet *-- PetHealth
+PetHealth --> PetHealthStatus
+
+@enduml

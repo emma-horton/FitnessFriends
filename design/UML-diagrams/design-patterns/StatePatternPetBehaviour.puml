@@ -1,0 +1,84 @@
+@startuml
+title State Design Pattern for Pet Behavior
+
+' Context class
+class PetBehaviour {
+    - Pet pet
+    - PetState state
+    + PetBehaviour(Pet pet)
+    + void updateState()
+    + void setPet(Pet pet)
+    + Pet getPet()
+    + void tryToMove()
+    + void tryToEat()
+    + void tryToPlay()
+}
+
+' State interface
+interface PetState {
+    + void move(Pet pet)
+    + void eat(Pet pet)
+    + void play(Pet pet)
+}
+
+' Concrete States
+class HealthyState implements PetState {
+    + void move(Pet pet)
+    + void eat(Pet pet)
+    + void play(Pet pet)
+}
+
+class SickState implements PetState {
+    + void move(Pet pet)
+    + void eat(Pet pet)
+    + void play(Pet pet)
+}
+
+class DeadState implements PetState {
+    + void move(Pet pet)
+    + void eat(Pet pet)
+    + void play(Pet pet)
+}
+
+' Pet class
+abstract class Pet {
+    - int petId
+    - PetHealth health
+    - String name
+    + Pet(int petId, PetHealth health, String name)
+    + int getPetId()
+    + PetHealth getHealth()
+    + String getName()
+    + abstract void eat()
+    + abstract void play()
+    + abstract void move()
+    + abstract void sleep()
+    + abstract void hibernate()
+}
+
+' PetHealth class
+class PetHealth {
+    - PetHealthStatus status
+    + PetHealth(PetHealthStatus status)
+    + PetHealthStatus getStatus()
+    + void setStatus(PetHealthStatus status)
+    + void updateStatus(PetHealthStatus newStatus)
+}
+
+' Enum for PetHealthStatus
+enum PetHealthStatus {
+    HEALTHY
+    SICK
+    DEAD
+}
+
+' Relationships
+PetBehaviour --> PetState : delegates to
+' PetState <|.. HealthyState
+' PetState <|.. SickState
+' PetState <|.. DeadState
+PetBehaviour --> Pet : uses
+Pet *-- PetHealth
+PetHealth --> PetHealthStatus
+
+@enduml

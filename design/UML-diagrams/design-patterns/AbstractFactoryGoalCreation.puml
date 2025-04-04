@@ -1,0 +1,77 @@
+@startuml
+title Abstract Factory Pattern for Goal Creation
+
+' Abstract Factory
+abstract class GoalFactory {
+    + abstract FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+}
+
+' Concrete Factories
+class RunningGoalFactory extends GoalFactory {
+    + FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+}
+
+class CyclingGoalFactory extends GoalFactory {
+    + FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+}
+
+class SwimmingGoalFactory extends GoalFactory {
+    + FitnessGoal createGoal(int goalId, int userId, GoalType goalType, int targetValue, SportType sport)
+}
+
+' Abstract Product
+abstract class FitnessGoal {
+    - int goalId
+    - int userId
+    - GoalType goalType
+    - int targetValue
+    - SportType sport
+    + FitnessGoal(int goalId, int userId)
+    + abstract boolean isThisWeeksGoalAchieved()
+    + abstract boolean wasLastWeeksGoalAchieved()
+}
+
+' Concrete Products
+class DistanceGoal extends FitnessGoal {
+    + DistanceGoal(int goalId, int userId, int targetValue, SportType sport)
+    + boolean isThisWeeksGoalAchieved()
+    + boolean wasLastWeeksGoalAchieved()
+}
+
+class DurationGoal extends FitnessGoal {
+    + DurationGoal(int goalId, int userId, int targetValue, SportType sport)
+    + boolean isThisWeeksGoalAchieved()
+    + boolean wasLastWeeksGoalAchieved()
+}
+
+class FrequencyGoal extends FitnessGoal {
+    + FrequencyGoal(int goalId, int userId, int targetValue, SportType sport)
+    + boolean isThisWeeksGoalAchieved()
+    + boolean wasLastWeeksGoalAchieved()
+}
+
+' Enums for GoalType and SportType
+enum GoalType {
+    DISTANCE
+    DURATION
+    FREQUENCY
+}
+
+enum SportType {
+    RUN
+    SWIM
+    RIDE
+}
+
+' Relationships
+' GoalFactory <|-- RunningGoalFactory
+' GoalFactory <|-- CyclingGoalFactory
+' GoalFactory <|-- SwimmingGoalFactory
+GoalFactory --> FitnessGoal : creates
+' FitnessGoal <|-- DistanceGoal
+' FitnessGoal <|-- DurationGoal
+' FitnessGoal <|-- FrequencyGoal
+FitnessGoal --> GoalType
+FitnessGoal --> SportType
+
+@enduml

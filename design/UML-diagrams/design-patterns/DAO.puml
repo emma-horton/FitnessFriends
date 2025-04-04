@@ -1,0 +1,115 @@
+@startuml
+title DAO Design Pattern for Streamlining Data Interaction
+
+' Database Connection
+class DatabaseConnection {
+    - static final String URL
+    - static Connection connection
+    + static Connection getConnection()
+    + static void disconnect()
+}
+
+' DAO Interface (optional, not implemented in your project)
+interface DAO<T> {
+    + List<T> getByUserId(int userId) throws SQLException
+}
+
+' Concrete DAOs
+class UserDAO {
+    - Connection connection
+    + UserDAO(Connection connection)
+    + User getUserByUsernameAndPassword(String username, String password)
+    + boolean registerUser(String username, String password)
+    + int getUserIdByUsername(String username)
+}
+
+class PetDAO {
+    - Connection connection
+    + PetDAO(Connection connection)
+    + void createPet(int userId, String petName, String petType, String healthStatus)
+    + PetBehaviour getPetForUser(int userId)
+}
+
+class HabitGoalDAO {
+    - Connection connection
+    + HabitGoalDAO(Connection connection)
+    + void createHabitGoal(int userId, GoalType goalType, SportType sportType, int targetValue)
+    + void updateHabitGoal(int goalId, int newTargetValue)
+    + List<FitnessGoal> getGoalsForUser(int userId)
+}
+
+class ActivityDAO {
+    - Connection connection
+    + ActivityDAO(Connection connection)
+    + List<Activity> getByUserId(int userId)
+    + List<Activity> getThisWeeksDataByUserId(int userId, SportType sport)
+    + List<Activity> getLastWeeksDataByUserId(int userId, SportType sport)
+}
+
+' Entities
+class User {
+    - int userId
+    - String username
+    - UserProfile profile
+    - PetBehaviour petBehaviour
+    + User(int userId, String username)
+    + User(int userId, String username, UserProfile profile, PetBehaviour petBehaviour)
+}
+
+class PetBehaviour {
+    - Pet pet
+    + PetBehaviour(Pet pet)
+    + void tryToMove()
+    + void tryToEat()
+    + void tryToPlay()
+}
+
+class FitnessGoal {
+    - int goalId
+    - int userId
+    - GoalType goalType
+    - int targetValue
+    - SportType sport
+    + FitnessGoal(int goalId, int userId)
+    + abstract boolean isThisWeeksGoalAchieved()
+    + abstract boolean wasLastWeeksGoalAchieved()
+}
+
+class Activity {
+    - int dataId
+    - int userId
+    - String activityDate
+    - String activityType
+    - double activityDuration
+    - double activityDistance
+    + Activity(int dataId, int userId, String activityDate, String activityType, double activityDuration, double activityDistance)
+}
+
+' Enums
+enum GoalType {
+    DISTANCE
+    DURATION
+    FREQUENCY
+}
+
+enum SportType {
+    RUN
+    SWIM
+    RIDE
+}
+
+' Relationships
+DatabaseConnection --> UserDAO
+DatabaseConnection --> PetDAO
+DatabaseConnection --> HabitGoalDAO
+DatabaseConnection --> ActivityDAO
+
+UserDAO --> User
+PetDAO --> PetBehaviour
+HabitGoalDAO --> FitnessGoal
+ActivityDAO --> Activity
+
+FitnessGoal --> GoalType
+FitnessGoal --> SportType
+
+@enduml

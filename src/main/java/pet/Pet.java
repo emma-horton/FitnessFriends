@@ -28,11 +28,26 @@ public abstract class Pet extends PetBehaviour {
     }
 
     
-    public abstract void eat();
+    // Template method for moving
+    public void move() {
+        System.out.println(getName() + " is preparing to move...");
+        performMove(); // Primitive operation
+        System.out.println(getName() + " has finished moving.");
+    }
+
+    // Template method for eating
+    public void eat() {
+        System.out.println(getName() + " is preparing to eat...");
+        performEat(); // Primitive operation
+        System.out.println(getName() + " has finished eating.");
+    }
+
+    // Abstract methods (primitive operations)
+    protected abstract void performMove();
+    protected abstract void performEat();
+
     public abstract void play();
-    public abstract void move();
     public abstract void sleep();
     public abstract void hibernate();
-
 
 }

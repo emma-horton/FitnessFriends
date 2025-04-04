@@ -1,0 +1,63 @@
+@startuml
+title Template Pattern for Core Pet Behaviors
+
+' Abstract Class
+abstract class Pet {
+    - int petId
+    - PetHealth health
+    - String name
+    + Pet(int petId, PetHealth health, String name)
+    + int getPetId()
+    + PetHealth getHealth()
+    + String getName()
+    + void move()  ' Template method
+    + void eat()   ' Template method
+    + abstract void play()
+    + abstract void sleep()
+    + abstract void hibernate()
+    # abstract void performMove()  ' Primitive operation
+    # abstract void performEat()   ' Primitive operation
+}
+
+' Concrete Classes
+class Parrot extends Pet {
+    + Parrot(int petId, PetHealth health, String name)
+    + void play()
+    + void sleep()
+    + void hibernate()
+    # void performMove()  ' Implements primitive operation
+    # void performEat()   ' Implements primitive operation
+}
+
+class Turtle extends Pet {
+    + Turtle(int petId, PetHealth health, String name)
+    + void play()
+    + void sleep()
+    + void hibernate()
+    # void performMove()  ' Implements primitive operation
+    # void performEat()   ' Implements primitive operation
+}
+
+' Supporting Class
+class PetHealth {
+    - PetHealthStatus status
+    + PetHealth(PetHealthStatus status)
+    + PetHealthStatus getStatus()
+    + void setStatus(PetHealthStatus status)
+    + void updateStatus(PetHealthStatus newStatus)
+}
+
+' Enum for PetHealthStatus
+enum PetHealthStatus {
+    HEALTHY
+    SICK
+    DEAD
+}
+
+' Relationships
+' Pet <|-- Parrot
+' Pet <|-- Turtle
+Pet *-- PetHealth
+PetHealth --> PetHealthStatus
+
+@enduml
