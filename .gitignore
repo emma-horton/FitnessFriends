@@ -16,3 +16,5 @@ src/main/java/data/createDatabase/*
 
 # Ignore config.json in the dao directory
 src/main/java/data/dao/config.json
+
+design/UML-diagrams/design_patterns/*

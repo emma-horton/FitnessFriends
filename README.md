@@ -47,3 +47,45 @@ This project leverages several software design patterns to ensure a robust, main
    git clone <repository-url>
    cd GarminVirtualPetProject
    ```
+2. **Build the Project:**
+    ```bash
+    mvn clean install
+    ```
+3. **Run the Application:**
+    ```bash
+    mvn exec:java
+    ```
+4. **Start the Redirect Server:**
+    ```bash
+    node redirectServer.js
+    ```
+
+---
+## **How to Use**
+1. Register or Log In:
+* Register a new account or log in with an existing one.
+
+2. Connect Strava:
+* Follow the prompts to authorize your Strava account.
+
+3. Create a Pet:
+* Choose a pet type (e.g., Parrot, Turtle) and name your pet.
+
+4. Set Fitness Goals:
+* Define weekly goals for distance, duration, or frequency in your preferred sport.
+
+5. Track Progress:
+* Sync your fitness activities from Strava and monitor your pet's health and behavior.
+
+6. Interact with Your Pet:
+* View your pet's status, play with it, and ensure its health by meeting your fitness goals.
+
+### **Future Plans**
+* Add more pet types (e.g., Dog, Cat) with unique behaviors.
+* Introduce new fitness goal categories (e.g., calories burned).
+* Implement a graphical user interface (GUI) for a more interactive experience.
+* Add real-time notifications for pet health updates.
+* Explore additional design patterns, such as the Observer Pattern for real-time updates.
+
+## **Contributing**
+Contributions are welcome! If you’d like to contribute, please fork the repository and submit a pull request.
