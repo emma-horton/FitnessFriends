@@ -2,7 +2,6 @@
 
 **Fitness Friends** is a virtual pet application designed to make fitness tracking fun and engaging. By integrating with the Strava API, the app allows users to track their fitness activities, set goals, and care for a virtual pet whose health and behavior are influenced by the user's progress. Whether you're using a Garmin device, another fitness tracker, or no tracker at all, Fitness Friends provides a unique way to stay motivated on your fitness journey.
 
----
 
 ## **Features**
 - **Virtual Pet Interaction**: Create and care for a virtual pet (e.g., Parrot, Turtle) whose health and behavior change based on your fitness progress.
@@ -11,7 +10,6 @@
 - **Dynamic Pet Behavior**: Pets respond to your progress with different states (e.g., Healthy, Sick, Dead).
 - **User-Friendly Interface**: Register, log in, and interact with your pet through a simple console-based interface.
 
----
 
 ## **Technologies Used**
 - **Java**: Core application logic and object-oriented design.
@@ -21,7 +19,6 @@
 - **PlantUML**: UML diagrams for design documentation.
 - **Maven**: Build and dependency management.
 
----
 
 ## **Design Patterns Implemented**
 This project leverages several software design patterns to ensure a robust, maintainable, and scalable architecture:
@@ -31,7 +28,6 @@ This project leverages several software design patterns to ensure a robust, main
 4. **Template Pattern**: For defining core pet actions (e.g., move, eat) with customizable steps for each pet type.
 5. **DAO Pattern**: For streamlining data interaction with the SQLite database.
 
----
 
 ## **Setup and Installation**
 
@@ -60,7 +56,6 @@ This project leverages several software design patterns to ensure a robust, main
     node redirectServer.js
     ```
 
----
 ## **How to Use**
 1. Register or Log In:
 * Register a new account or log in with an existing one.
