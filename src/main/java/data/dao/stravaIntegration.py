@@ -6,32 +6,10 @@ import sys
 import json
 import os
 
-# Load configuration from config.json
-CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
-
-def load_config():
-    """
-    Load configuration from the config.json file.
-    """
-    try:
-        with open(CONFIG_FILE, "r") as file:
-            config = json.load(file)
-        return config
-    except FileNotFoundError:
-        print(f"Error: Configuration file '{CONFIG_FILE}' not found.")
-        sys.exit(1)
-    except json.JSONDecodeError:
-        print(f"Error: Failed to parse the configuration file '{CONFIG_FILE}'.")
-        sys.exit(1)
-
-# Load the configuration
-config = load_config()
-
-# Use values from the config file
-DB_PATH = config["DB_PATH"]
-CLIENT_ID = config["CLIENT_ID"]
-CLIENT_SECRET = config["CLIENT_SECRET"]
-REDIRECT_URI = config["REDIRECT_URI"]
+DB_PATH = "fitness-friends.db"
+CLIENT_ID = "153559"
+CLIENT_SECRET = "4af20622bdca9abe169f54226bdb9327c3a32a91"
+REDIRECT_URI = "http://localhost:3000/"
 
 # Strava API endpoints
 AUTHORIZE_URL = "https://www.strava.com/oauth/authorize"
