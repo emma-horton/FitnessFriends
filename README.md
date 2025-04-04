@@ -40,8 +40,8 @@ This project leverages several software design patterns to ensure a robust, main
 ### **Steps to Run the Project**
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd GarminVirtualPetProject
+   git clone https://github.com/emma-horton/FitnessFriends.git
+   cd FitnessFriends
    ```
 2. **Build the Project:**
     ```bash
